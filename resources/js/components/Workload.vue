@@ -1,8 +1,25 @@
 <template>
-    <card class="flex flex-col items-center justify-center relative nova-horizon-stats-card" v-bind:class="borderClass">
+    <card class="block nova-horizon-stats-card" v-bind:class="borderClass">
         <div class="px-3 py-3">
-            <h1 class="text-left" v-html="cardTitle"></h1>
+            <h1 class="text-left text-80 font-light" v-html="cardTitle"></h1>
             <div v-if="isError" class="text-sm pt-2">Error getting stats. Is horizon installed?</div>
+
+            <table class="table w-full">
+                <thead>
+                    <tr>
+                        <th>Queue</th>
+                        <th>Processes</th>
+                        <th>Wait</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="workload in workloads">
+                        <td class="text-center" v-html="workload.name"></td>
+                        <td class="text-center" v-html="workload.processes"></td>
+                        <td class="text-center" v-html="humanTime(workload.wait)"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="loading-indicator text-sm text-80" v-if="isLoading">Loading...</div>
@@ -38,17 +55,6 @@
             setInterval(this.fetchStats, this.refreshTime * 1000);
         },
 
-        computed: {
-            borderClass() {
-
-                if (!this.isLoading && this.isError) {
-                    return 'border border-danger';
-                }
-
-                return '';
-            }
-        },
-
         methods: {
             fetchStats() {
                 this.isLoading = true;
@@ -70,6 +76,12 @@
                 }).catch(err => {
                     this.isLoading = false;
                     this.isError = true;
+                });
+            },
+
+            humanTime(time) {
+                return moment.duration(time, "seconds").humanize().replace(/^(.)|\s+(.)/g, function ($1) {
+                    return $1.toUpperCase();
                 });
             }
         }
