@@ -18,7 +18,10 @@ class FailedJobsPastHour extends Card
      *
      * @var array
      */
-    public $meta = ['refreshTime' => 30];
+    public $meta = [
+        'refreshTime' => 30,
+        'cardTitle' => 'Failed Jobs Past Hour'
+    ];
 
     /**
      * FailedJobsPastHour constructor.
@@ -26,11 +29,15 @@ class FailedJobsPastHour extends Card
      * @param int|null $secondsToRefresh
      * @param null|string $component
      */
-    public function __construct(int $secondsToRefresh = 30, string $component = null)
+    public function __construct(int $secondsToRefresh = 30, string $cardTitle = null, string $component = null)
     {
         parent::__construct($component);
 
         $this->meta['refreshTime'] = $secondsToRefresh;
+
+        if (!is_null($cardTitle)) {
+            $this->meta['cardTitle'] = trim($cardTitle);
+        }
     }
 
     /**

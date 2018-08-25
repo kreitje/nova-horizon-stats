@@ -1,7 +1,7 @@
 <template>
     <card class="flex flex-col items-center justify-center relative nova-horizon-stats-card" v-bind:class="borderClass">
         <div class="px-3 py-3">
-            <h1 class="text-center text-3xl text-80"><strong v-bind:class="statClass" v-html="stat"></strong></h1>
+            <h1 class="text-center text-3xl text-80"><strong v-html="stat">{{stat}}</strong></h1>
             <h2 class="text-center text-80 font-light" v-html="cardTitle"></h2>
 
             <div v-if="!isHorizonOnline" class="text-danger text-center">Horizon is not online.</div>
@@ -22,11 +22,11 @@
 
         data: function() {
             return {
-                cardTitle: 'Jobs Past Hour',
+                cardTitle: 'Processes',
                 isLoading: true,
                 isError: false,
                 stat: 0,
-                status: 'status',
+                status: '',
                 refreshTime: 30
             }
         },
@@ -54,14 +54,6 @@
                 return '';
             },
 
-            statClass() {
-                if (this.stat > 0) {
-                    return 'text-danger';
-                }
-
-                return '';
-            },
-
             isHorizonOnline() {
                 return this.status === 'running';
             }
@@ -69,13 +61,12 @@
 
         methods: {
             fetchStats() {
-                console.log('getching');
                 this.isLoading = true;
                 this.isError = false;
                 Nova.request().get('/horizon/api/stats').then(response => {
                     this.isLoading = false;
                     this.isError = false;
-                    this.stat = response.data.recentlyFailed;
+                    this.stat = response.data.processes;
                     this.status = response.data.status;
                 }).catch(err => {
                     this.isLoading = false;

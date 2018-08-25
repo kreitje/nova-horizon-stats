@@ -4,7 +4,7 @@ namespace Kreitje\NovaHorizonStats;
 
 use Laravel\Nova\Card;
 
-class JobsPastHour extends Card
+class Processes extends Card
 {
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -20,7 +20,7 @@ class JobsPastHour extends Card
      */
     public $meta = [
         'refreshTime' => 30,
-        'cardTitle' => 'Jobs Past Hour'
+        'cardTitle' => 'Processes'
     ];
 
     /**
@@ -30,7 +30,7 @@ class JobsPastHour extends Card
      */
     public function component()
     {
-        return 'nova-horizon-stats-jobs-past-hour';
+        return 'nova-horizon-stats-processes';
     }
 
     /**
