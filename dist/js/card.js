@@ -177,7 +177,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(9);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
@@ -187,7 +187,8 @@ module.exports = __webpack_require__(9);
 Nova.booting(function (Vue, router) {
     Vue.component('nova-horizon-stats-jobs-past-hour', __webpack_require__(3));
     Vue.component('nova-horizon-stats-failed-jobs-past-hour', __webpack_require__(6));
-    Vue.component('nova-horizon-stats-processes', __webpack_require__(14));
+    Vue.component('nova-horizon-stats-processes', __webpack_require__(9));
+    Vue.component('nova-horizon-stats-workload', __webpack_require__(12));
 });
 
 /***/ }),
@@ -630,24 +631,14 @@ if (false) {
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(15)
+var __vue_script__ = __webpack_require__(10)
 /* template */
-var __vue_template__ = __webpack_require__(16)
+var __vue_template__ = __webpack_require__(11)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -686,7 +677,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 15 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -772,7 +763,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 16 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -853,6 +844,190 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-c9ba01fc", module.exports)
   }
 }
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(13)
+/* template */
+var __vue_template__ = __webpack_require__(14)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Workload.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6c3d1d62", Component.options)
+  } else {
+    hotAPI.reload("data-v-6c3d1d62", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['card'],
+
+    data: function data() {
+        return {
+            cardTitle: 'Queue Workload',
+            isLoading: true,
+            isError: false,
+            status: '',
+            refreshTime: 30,
+            workloads: []
+        };
+    },
+
+    mounted: function mounted() {
+        console.log(this.card);
+        if (this.card.refreshTime) {
+            this.refreshTime = parseInt(this.card.refreshTime);
+        }
+
+        if (this.card.cardTitle) {
+            this.cardTitle = this.card.cardTitle;
+        }
+
+        this.fetchStats();
+        setInterval(this.fetchStats, this.refreshTime * 1000);
+    },
+
+
+    computed: {
+        borderClass: function borderClass() {
+
+            if (!this.isLoading && this.isError) {
+                return 'border border-danger';
+            }
+
+            return '';
+        }
+    },
+
+    methods: {
+        fetchStats: function fetchStats() {
+            var _this = this;
+
+            this.isLoading = true;
+            this.isError = false;
+            Nova.request().get('/horizon/api/workload').then(function (response) {
+                _this.isLoading = false;
+                _this.isError = false;
+                console.log(response.data);
+
+                if (response.data.length > 0) {
+                    if (_this.card.queueNames.length === 0) {
+                        _this.workloads = response.data;
+                    } else {
+                        //need to filter
+                    }
+                }
+            }).catch(function (err) {
+                _this.isLoading = false;
+                _this.isError = true;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "card",
+    {
+      staticClass:
+        "flex flex-col items-center justify-center relative nova-horizon-stats-card",
+      class: _vm.borderClass
+    },
+    [
+      _c("div", { staticClass: "px-3 py-3" }, [
+        _c("h1", {
+          staticClass: "text-left",
+          domProps: { innerHTML: _vm._s(_vm.cardTitle) }
+        }),
+        _vm._v(" "),
+        _vm.isError
+          ? _c("div", { staticClass: "text-sm pt-2" }, [
+              _vm._v("Error getting stats. Is horizon installed?")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.isLoading
+        ? _c("div", { staticClass: "loading-indicator text-sm text-80" }, [
+            _vm._v("Loading...")
+          ])
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6c3d1d62", module.exports)
+  }
+}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
