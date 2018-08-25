@@ -1,7 +1,8 @@
 <template>
     <card class="flex flex-col items-center justify-center relative nova-horizon-stats-card" v-bind:class="borderClass">
         <div class="px-3 py-3">
-            <h1 class="text-center text-3xl text-80 font-light"><strong>{{stat}}</strong> Jobs Past Hour</h1>
+            <h1 class="text-center text-3xl text-80"><strong>{{stat}}</strong></h1>
+            <h2 class="text-center text-80 font-light">Jobs Past Hour</h2>
 
             <div v-if="!isHorizonOnline" class="text-danger text-center">Horizon is not online.</div>
             <div v-if="isError" class="text-sm pt-2">Error getting stats. Is horizon installed?</div>
