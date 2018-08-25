@@ -18,6 +18,9 @@
                         <td class="text-center" v-html="workload.processes"></td>
                         <td class="text-center" v-html="humanTime(workload.wait)"></td>
                     </tr>
+                    <tr v-if="workloads.length === 0">
+                        <td colspan="3">No queues returned. Either you are watching only specific queues or maybe Horizon is not running.</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -35,14 +38,12 @@
                 cardTitle: 'Queue Workload',
                 isLoading: true,
                 isError: false,
-                status: '',
                 refreshTime: 30,
                 workloads: []
             }
         },
 
         mounted() {
-            console.log(this.card);
             if (this.card.refreshTime) {
                 this.refreshTime = parseInt(this.card.refreshTime);
             }
@@ -62,14 +63,18 @@
                 Nova.request().get('/horizon/api/workload').then(response => {
                     this.isLoading = false;
                     this.isError = false;
-                    console.log(response.data);
 
                     if (response.data.length > 0) {
                         if (this.card.queueNames.length === 0) {
                             this.workloads = response.data;
                         } else {
-                            //need to filter
+
+                            this.workloads = response.data.filter(workload => {
+                                return _.indexOf(this.card.queueNames, workload.name) > -1;
+                            });
                         }
+                    } else {
+                        this.workloads = [];
                     }
 
 
