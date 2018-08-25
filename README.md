@@ -8,6 +8,8 @@ You can install the package in to a Laravel app that uses Nova via composer:
 composer require kreitje/nova-horizon-stats
 ```
 
+In your `app/Providers/NovaServiceProvider.php` add the cards to the cards method array.
+
 ## Usage:
 ```php
 public function cards() {
