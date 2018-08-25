@@ -14,8 +14,8 @@ In your `app/Providers/NovaServiceProvider.php` add the cards to the cards metho
 ```php
 public function cards() {
     return [
-        new JobsPastHour,
-        new FailedJobsPastHour,
+        new \Kreitje\NovaHorizonStats\JobsPastHour,
+        new \Kreitje\NovaHorizonStats\FailedJobsPastHour,
     ];
 }
 ```
@@ -25,8 +25,8 @@ You can pass an argument into the classes for how many seconds to automatically 
 ```php
 public function cards() {
     return [
-        new JobsPastHour(5),
-        new FailedJobsPastHour(10),
+        new \Kreitje\NovaHorizonStats\JobsPastHour(5),
+        new \Kreitje\NovaHorizonStats\FailedJobsPastHour(10),
     ];
 }
 ```
