@@ -14,9 +14,9 @@ In your `app/Providers/NovaServiceProvider.php` add the cards to the cards metho
 ```php
 public function cards() {
     return [
-        new Kreitje\NovaHorizonStats\JobsPastHour,
-        new Kreitje\NovaHorizonStats\FailedJobsPastHour,
-        new Kreitje\NovaHorizonStats\Processes
+        new \Kreitje\NovaHorizonStats\JobsPastHour,
+        new \Kreitje\NovaHorizonStats\FailedJobsPastHour,
+        new \Kreitje\NovaHorizonStats\Processes
     ];
 }
 ```
@@ -26,9 +26,9 @@ You can pass an argument into the classes for how many seconds to automatically 
 ```php
 public function cards() {
     return [
-        new Kreitje\NovaHorizonStats\JobsPastHour(5),
-        new Kreitje\NovaHorizonStats\FailedJobsPastHour(10),
-        new Kreitje\NovaHorizonStats\Processes(15)
+        new \Kreitje\NovaHorizonStats\JobsPastHour(5),
+        new \Kreitje\NovaHorizonStats\FailedJobsPastHour(10),
+        new \Kreitje\NovaHorizonStats\Processes(15)
     ];
 }
 ```
@@ -37,7 +37,7 @@ If you want to change the title of the cards, pass a second argument to the card
 ```php
 public function cards() {
     return [
-        new Kreitje\NovaHorizonStats\JobsPastHour(5, 'Jobs from the past hour')
+        new \Kreitje\NovaHorizonStats\JobsPastHour(5, 'Jobs from the past hour')
     ];
 }
 ```
