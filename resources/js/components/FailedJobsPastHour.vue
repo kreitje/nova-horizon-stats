@@ -69,7 +69,6 @@
 
         methods: {
             fetchStats() {
-                console.log('getching');
                 this.isLoading = true;
                 this.isError = false;
                 Nova.request().get('/horizon/api/stats').then(response => {
