@@ -18,7 +18,10 @@ class Processes extends Card
      *
      * @var array
      */
-    public $meta = ['refreshTime' => 30];
+    public $meta = [
+        'refreshTime' => 30,
+        'cardTitle' => 'Processes'
+    ];
 
     /**
      * Get the component name for the element.
@@ -36,10 +39,14 @@ class Processes extends Card
      * @param int|null $secondsToRefresh
      * @param null|string $component
      */
-    public function __construct(int $secondsToRefresh = 30, string $component = null)
+    public function __construct(int $secondsToRefresh = 30, $cardTitle = null, string $component = null)
     {
         parent::__construct($component);
 
         $this->meta['refreshTime'] = $secondsToRefresh;
+
+        if (!is_null($cardTitle)) {
+            $this->meta['cardTitle'] = trim($cardTitle);
+        }
     }
 }
