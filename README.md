@@ -37,7 +37,7 @@ If you want to change the title of the cards, pass a second argument to the card
 ```php
 public function cards() {
     return [
-        new Kreitje\NovaHorizonStats\JobsPastHour(5, 'Jobs from the past hour')
+        new \Kreitje\NovaHorizonStats\JobsPastHour(5, 'Jobs from the past hour')
     ];
 }
 ```
