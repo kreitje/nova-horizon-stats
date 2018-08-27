@@ -1,6 +1,8 @@
 # Nova Horizon Stats
 For sites that use Laravel Horizon, this provides a few cards to show stats you will find on /horizon. 
 
+![horizon stats screenshot](https://kreitje.github.io/images/nova-horizon-stats/cards-screenshot.png)
+
 ## Installation
 
 You can install the package in to a Laravel app that uses Nova via composer:
