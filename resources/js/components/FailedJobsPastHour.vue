@@ -41,7 +41,11 @@
             }
 
             this.fetchStats();
-            setInterval(this.fetchStats, this.refreshTime * 1000);
+            this.fetchStatsIntervalId = setInterval(this.fetchStats, this.refreshTime * 1000);
+        },
+
+        beforeDestroy() {
+            clearInterval(this.fetchStatsIntervalId);
         },
 
         computed: {
