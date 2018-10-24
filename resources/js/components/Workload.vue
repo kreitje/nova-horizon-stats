@@ -9,6 +9,7 @@
                     <tr>
                         <th>Queue</th>
                         <th>Processes</th>
+                        <th>Jobs</th>
                         <th>Wait</th>
                     </tr>
                 </thead>
@@ -16,10 +17,11 @@
                     <tr v-for="workload in workloads">
                         <td class="text-center" v-html="workload.name"></td>
                         <td class="text-center" v-html="workload.processes"></td>
+                        <td class="text-center" v-html="workload.length"></td>
                         <td class="text-center" v-html="humanTime(workload.wait)"></td>
                     </tr>
                     <tr v-if="workloads.length === 0">
-                        <td colspan="3">No queues returned. Either you are watching only specific queues or maybe Horizon is not running.</td>
+                        <td colspan="4">No queues returned. Either you are watching only specific queues or maybe Horizon is not running.</td>
                     </tr>
                 </tbody>
             </table>
